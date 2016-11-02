@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+const chalk = require('chalk');
+const commander = require('commander');
+const spawn = require('win-spawn');
+const join = require('path').join;
+const mkdirpSync = require('fs-extra').mkdirpSync;
+const existsSync = require('fs').existsSync;
+const error = chalk.red;
+
+commander
+  .version(require('../package').version, '-v, --version')
+  .usage('<command> [options]')
+  .on('--help', printHelp)
+
+  .usage('[options] appName')
+  .option('--no-install', 'Disable npm install after files created')
+  .parse(process.argv);
+
+if (!commander.args[0]) {
+  commander.help();
+} else {
+  const dest = join(process.cwd(), commander.args[0]);
+  // if (existsSync(dest)) {
+  //   console.error(error('Existing directory here, please run new command for an empty folder!'));
+  //   process.exit(1);
+  // }
+  mkdirpSync(dest);
+  process.chdir(dest);
+  require('../index')(commander);
+}
+
+function printHelp() {
+  console.log('  Commands:');
+  console.log();
+  console.log('    init           Init a new dva application in the current folder');
+  console.log('    new            Creates a new application');
+  console.log('    generate       Generates new code (short-cut alias: "g")');
+  console.log();
+  console.log('  All commands can be run with -h (or --help) for more information.')
+}
