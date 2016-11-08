@@ -61,9 +61,13 @@ alias = Object.assign(alias, {
 
 
 var config = {
+  // Don't attempt to continue if there are any errors.
+  // bail: true,
+  // We generate sourcemaps in production. This is slow but gives good results.
+  // You can exclude the *.map files from the build during deployment.
   context: SRC_PATH,
   entry: {
-    app: [SRC_PATH + '/index.js']
+    app: ['babel-polyfill', SRC_PATH + '/index.js']
   },
   output: {
     path: DIST_PATH,
@@ -86,9 +90,9 @@ var config = {
     // 使用文件名替换数字作为模块ID
     // new webpack.NamedModulesPlugin(),
     // 使用 hash 作模块 ID，文件名作ID太长了，文件大小剧增
-    new HashedModuleIdsPlugin(),
+    // new HashedModuleIdsPlugin(),
     // 根据文件内容生成 hash
-    new WebpackMd5Hash(),
+    // new WebpackMd5Hash(),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In production, it will be an empty string unless you specify "homepage"

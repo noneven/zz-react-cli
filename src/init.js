@@ -9,18 +9,17 @@ var error = require('./log').error;
 var success = require('./log').success;
 
 function init(commanders) {
-  console.log(1111)
   var install = commanders.install;
   const cwd = join(__dirname, '../template');
   const dest = process.cwd();
   const projectName = basename(dest);
 
-  // if (!emptyDir(dest)) {
-  //   error('Existing files here, please run init command in an empty folder!');
-  //   process.exit(1);
-  // }
+  if (!emptyDir(dest)) {
+    error('Existing files here, please run init command in an empty folder!');
+    process.exit(1);
+  }
 
-  console.log(`Creating a new Dva app in ${dest}.`);
+  console.log(`Creating a new zzis app in ${dest}.`);
   console.log();
 
   vfs.src(['./**', '!node_modules/**/*'], {cwd: cwd, cwdbase: true, dot: true})

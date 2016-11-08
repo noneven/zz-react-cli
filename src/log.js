@@ -14,4 +14,3 @@ module.exports = {
 	  console.error(chalk.green(message));
 	}
 }
-
