@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var db = require('./db.json');
+var db = require('./api/db.json');
 
 // 设置跨域访问，方便开发
 app.all('*', function(req, res, next) {
