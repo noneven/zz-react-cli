@@ -1,0 +1,23 @@
+{
+  "name": "sprite-plugin",
+  "version": "0.1.0",
+  "description": "Build sprite images and css sheets on the fly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderwin/sprite.plugin.git"
+  },
+  "keywords": [
+    "sprite",
+    "plugin"
+  ],
+  "author": "imChenJian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coderwin/sprite.plugin/issues"
+  },
+  "homepage": "https://github.com/coderwin/sprite.plugin#readme"
+}
