@@ -9,6 +9,7 @@ var error = require('./log').error;
 var success = require('./log').success;
 
 function init(commanders) {
+    console.log(commanders)
   var install = commanders.install;
   const cwd = join(__dirname, '../template');
   const dest = process.cwd();
@@ -30,8 +31,7 @@ function init(commanders) {
       // renameSync(join(dest, 'gitignore'), join(dest, '.gitignore'));
       if (install) {
         info('run', 'npm install');
-        // require('./install')(printSuccess);
-        printSuccess();
+        require('./install')(printSuccess);
       } else {
         printSuccess();
       }

@@ -1,4 +1,5 @@
-import which from 'which';
+
+var which = require('which');
 
 function runCmd(cmd, args, fn) {
   args = args || [];
@@ -26,7 +27,7 @@ function findNpm() {
   throw new Error('please install npm');
 }
 
-export default function (done) {
+module.exports = function (done) {
   const npm = findNpm();
   runCmd(which.sync(npm), ['install'], function () {
     console.log(npm + ' install end');

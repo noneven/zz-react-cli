@@ -20,7 +20,7 @@
     "webpack",
     "react",
     "es6",
-    "babel",
+    "babel"
   ],
   "author": "imChenJian",
   "license": "MIT",
