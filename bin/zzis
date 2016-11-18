@@ -21,9 +21,9 @@ if (!commander.args[0]) {
   commander.help();
 } else {
   let dest;
-  if(commander.args[0] == 'init'){
+  if(commander.args[0] == 'init'||commander.args[0] == 'i'){
     dest = process.cwd();
-  }else if(commander.args[0] == 'new'){
+}else if(commander.args[0] == 'new'||commander.args[0] == 'n'){
     dest = join(process.cwd(), commander.args[1]);
     if (existsSync(dest)) {
         console.error(error('Existing directory here, please run new command for an empty folder!'));
@@ -32,16 +32,17 @@ if (!commander.args[0]) {
     mkdirpSync(dest);
     process.chdir(dest);
   }
-
   require('../index')(commander);
+}else if (commander.args[0] == 'create'||commander.args[0] == 'c') {
+    console.log('waiting')
 }
 
 function printHelp() {
   console.log('  Commands:');
   console.log();
-  console.log('    init           Init a new react application in the current folder');
-  console.log('    new            Creates a new application');
-  console.log('    create         Generates a new component (short-cut alias: "c")');
+  console.log('    init           Create a new react application in the current folder (short-cut alias: "i")');
+  console.log('    new            Create a new application (short-cut alias: "n")');
+  console.log('    create         Create a new component (short-cut alias: "c")');
   console.log();
   console.log('  All commands can be run with -h (or --help) for more information.')
 }

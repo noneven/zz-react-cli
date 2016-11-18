@@ -9,7 +9,6 @@ var error = require('./log').error;
 var success = require('./log').success;
 
 function init(commanders) {
-    console.log(commanders)
   var install = commanders.install;
   const cwd = join(__dirname, '../template');
   const dest = process.cwd();
@@ -27,8 +26,6 @@ function init(commanders) {
     .pipe(template(dest, cwd))
     .pipe(vfs.dest(dest))
     .on('end', function() {
-      // info('rename', 'gitignore -> .gitignore');
-      // renameSync(join(dest, 'gitignore'), join(dest, '.gitignore'));
       if (install) {
         info('run', 'npm install');
         require('./install')(printSuccess);
@@ -40,24 +37,22 @@ function init(commanders) {
 
   function printSuccess() {
     success(`
-Success! Created ${projectName} at ${dest}.
+    Success! Created ${projectName} at ${dest}.
 
-Inside that directory, you can run several commands:
-  * npm start: Starts the development server.
-  * npm run build: Bundles the app into dist for production.
-  * npm test: Run test.
+    Inside that directory, you can run several commands:
+      * npm start: Starts the development server.
+      * npm run build: Bundles the app into dist for production.
+      * npm test: Run test.
 
-We suggest that you begin by typing:
-  cd ${dest}
-  npm start
+    We suggest that you begin by typing:
+      cd ${dest}
+      npm start
 
-Happy hacking!`);
+    Happy hacking!`);
   }
 }
 
 function template(dest, cwd) {
-	console.log(dest)
-	console.log(cwd)
   return through.obj(function (file, enc, cb) {
     if (!file.stat.isFile()) {
       return cb();
