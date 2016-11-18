@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Router, browserHistory } from 'react-router';
 
 import './stubs/COURSES';
-import './index.css';
+import './index.less';
 import './logo.svg';
 const rootRoute = {
   childRoutes: [{
