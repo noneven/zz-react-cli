@@ -6,6 +6,6 @@ zz react-project-cli
 * 集成rem
 * 集成react-router异步路由
 * webpack chunk
-
+* 集成eslint
 
 (待完善)
