@@ -20,8 +20,6 @@ var NODE_MODULES_PATH =  ROOT_PATH + '/node_modules';
 var __DEV__ = process.env.NODE_ENV !== 'production';
 
 var args = process.argv;
-var uglify = args.indexOf('--uglify') > -1;
-
 
 // conf
 // import api from 'conf/api';
@@ -95,10 +93,10 @@ var config = {
         )
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor']
-    })
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'manifest',
+    //   chunks: ['vendor']
+    // })
   ]
 };
 
@@ -148,7 +146,7 @@ config.module.loaders.push({
 });
 
 // 压缩 js, css
-if (uglify) {
+if (!__DEV__) {
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {
