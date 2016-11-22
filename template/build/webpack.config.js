@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var WebpackMd5Hash = require('webpack-md5-hash');
-var HashedModuleIdsPlugin = require('./HashedModuleIdsPlugin');
+var AssetsWebpackPlugin = require('assets-webpack-plugin');
 var path = require('path');
 // 辅助函数
 var utils = require('./utils');
@@ -61,18 +60,12 @@ alias = Object.assign(alias, {
 
 
 var config = {
-  // Don't attempt to continue if there are any errors.
-  // bail: true,
-  // We generate sourcemaps in production. This is slow but gives good results.
-  // You can exclude the *.map files from the build during deployment.
   context: SRC_PATH,
   entry: {
     app: ['babel-polyfill', SRC_PATH + '/index.js']
   },
   output: {
     path: DIST_PATH,
-    // chunkhash 不能与 --hot 同时使用
-    // see https://github.com/webpack/webpack-dev-server/issues/377
     filename: __DEV__ ? 'static/js/[name].js' : 'static/js/[name].[chunkhash].js',
     chunkFilename: __DEV__ ? 'static/[name].chunk.js' : 'static/js/[name].[chunkhash].chunk.js'
   },
@@ -83,76 +76,16 @@ var config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      // http://stackoverflow.com/questions/30030031/passing-environment-dependent-variables-in-webpack
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development')
     }),
-
-    // 使用文件名替换数字作为模块ID
-    // new webpack.NamedModulesPlugin(),
-    // 使用 hash 作模块 ID，文件名作ID太长了，文件大小剧增
-    // new HashedModuleIdsPlugin(),
-    // 根据文件内容生成 hash
-    // new WebpackMd5Hash(),
-    // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
-    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    // In production, it will be an empty string unless you specify "homepage"
-    // in `package.json`, in which case it will be the pathname of that URL.
-    // new InterpolateHtmlPlugin({
-    //   PUBLIC_URL: publicUrl
-    // }),
-    // Generates an `index.html` file with the <script> injected.
-    // new HtmlWebpackPlugin({
-    //   inject: true,
-    //   template: paths.appHtml,
-    //   minify: {
-    //     removeComments: true,
-    //     collapseWhitespace: true,
-    //     removeRedundantAttributes: true,
-    //     useShortDoctype: true,
-    //     removeEmptyAttributes: true,
-    //     removeStyleLinkTypeAttributes: true,
-    //     keepClosingSlash: true,
-    //     minifyJS: true,
-    //     minifyCSS: true,
-    //     minifyURLs: true
-    //   }
-    // }),
-    // Makes some environment variables available to the JS code, for example:
-    // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
-    // It is absolutely essential that NODE_ENV was set to production here.
-    // Otherwise React will be compiled in the very slow development mode.
-    // new webpack.DefinePlugin(env),
-    // This helps ensure the builds are consistent if source hasn't changed:
     new webpack.optimize.OccurrenceOrderPlugin(),
-    // Try to dedupe duplicated modules, if any:
-    // new webpack.optimize.DedupePlugin(),
-    // Minify the code.
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     screw_ie8: true, // React doesn't support IE8
-    //     warnings: false
-    //   },
-    //   mangle: {
-    //     screw_ie8: true
-    //   },
-    //   output: {
-    //     comments: false,
-    //     screw_ie8: true
-    //   }
-    // }),
-    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    // new ExtractTextPlugin('static/css/[name].[contenthash:20].css'),
-    // Generate a manifest file which contains a mapping of all asset filenames
-    // to their corresponding output file so that tools can pick it up without
-    // having to parse `index.html`.
-    // new ManifestPlugin({
-    //   fileName: 'asset-manifest.json'
-    // }),
-    // split vendor js into its own file
+    new AssetsWebpackPlugin({
+      filename: 'asset-manifest.json',
+      path: DIST_PATH
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module, count) {
-        // any required modules inside node_modules are extracted to vendor
         return (
           module.resource &&
           /\.js$/.test(module.resource) &&
@@ -162,8 +95,6 @@ var config = {
         )
       }
     }),
-    // extract webpack runtime and module manifest to its own file in order to
-    // prevent vendor hash from being updated whenever app bundle is updated
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
@@ -171,21 +102,12 @@ var config = {
   ]
 };
 
-
 // loaders
 var CACHE_PATH = ROOT_PATH + '/cache';
 config.module.loaders = [];
 
 // 使用 babel 编译 jsx、es6
 config.module.loaders.push({
-  // test: /\.js$/,
-  // exclude: /node_modules/,
-  // // 这里使用 loaders ，因为后面还需要添加 loader
-  // loaders: ['babel?cacheDirectory=' + CACHE_PATH]
-
-  // test: /\.(js|jsx)$/,
-  // include: SRC_PATH,
-  // loaders: ['babel']
     test: /\.js$/,
     loaders: ['babel?presets[]=es2015'],
     include: SRC_PATH,
@@ -224,7 +146,6 @@ config.module.loaders.push({
     'image-webpack'
   ]
 });
-
 
 // 压缩 js, css
 if (uglify) {
@@ -301,27 +222,4 @@ config.plugins.push(function() {
     });
   });
 });
-
-// 内嵌 manifest 到 html 页面
-// config.plugins.push(function() {
-//   this.plugin('compilation', function(compilation) {
-//     compilation.plugin('html-webpack-plugin-after-emit', function(file, callback) {
-//       var manifest = '';
-//       Object.keys(compilation.assets).forEach(function(filename) {
-//         if (/\/?manifest.[^\/]*js$/.test(filename)) {
-//           manifest = '<script>' + compilation.assets[filename].source() + '</script>';
-//         }
-//       });
-//       if (manifest) {
-//         var htmlSource = file.html.source();
-//         htmlSource = htmlSource.replace(/(<\/head>)/, manifest + '$1');
-//         file.html.source = function() {
-//           return htmlSource;
-//         };
-//       }
-//       callback(null, file);
-//     });
-//   });
-// });
-
 module.exports = config;

@@ -23,7 +23,7 @@ if (!commander.args[0]) {
   let dest;
   if(commander.args[0] == 'init'||commander.args[0] == 'i'){
     dest = process.cwd();
-}else if(commander.args[0] == 'new'||commander.args[0] == 'n'){
+  }else if(commander.args[0] == 'new'||commander.args[0] == 'n'){
     dest = join(process.cwd(), commander.args[1]);
     if (existsSync(dest)) {
         console.error(error('Existing directory here, please run new command for an empty folder!'));
@@ -31,10 +31,10 @@ if (!commander.args[0]) {
     }
     mkdirpSync(dest);
     process.chdir(dest);
-  }
-  require('../index')(commander);
-}else if (commander.args[0] == 'create'||commander.args[0] == 'c') {
+    require('../index')(commander);
+  }else if (commander.args[0] == 'create'||commander.args[0] == 'c') {
     console.log('waiting')
+  }
 }
 
 function printHelp() {

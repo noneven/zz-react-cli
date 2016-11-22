@@ -1,17 +1,6 @@
-/**
-  node webpack.release.js
-     --watch         实时发布
-     --uglify        压缩
-     --deploy=test   发布到测试环境，默认选项
-     --deploy=online 发布到生产环境
-
-  NODE_ENV=production node build/webpack.release.js --watch --uglify --deploy=test
-  NODE_ENV=production node build/webpack.release.js --watch --uglify --deploy=online
-*/
 
 var webpack = require('webpack');
 var config = require('./webpack.config');
-var RenamePlugin = require('./rename.plugin');
 
 var args = process.argv;
 var watch = args.indexOf('--watch') > -1;
@@ -27,8 +16,6 @@ if (online) {
 } else {
   config.output.publicPath = testPublicPath;
 }
-
-// config.plugins.push(new RenamePlugin());
 
 var compiler = webpack(config);
 

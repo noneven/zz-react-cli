@@ -115,7 +115,7 @@ try {
     var CONFIG_PATH = process.argv[2].split("=")[1];
     config = require(CONFIG_PATH)
 } catch (e) {
-    util.error(e.message+"!use the default config to create sprite");
+  util.info("warning: ", e.message+"!use the default config to create sprite");
 }
 
 config = Object.assign(require('./config'),config);
