@@ -10,11 +10,13 @@
     "lint": "eslint src",
     "test": "make test",
     "start": "npm run dev",
+    "pre": "node build/sprite-plugin; node build/border1px.flow",
+    "predev": "npm run pre",
     "dev": "cross-env NODE_ENV=development node build/webpack.dev.js",
     "qa": "rm -r -f dist; npm run build",
     "postqa": "npm run ftp",
     "ftp": "node build/ftp",
-    "prebuild": "node build/sprite-plugin",
+    "prebuild": "npm run pre",
     "build": "cross-env NODE_ENV=production node build/webpack.release.js"
   },
   "keywords": [
