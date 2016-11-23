@@ -1,7 +1,7 @@
 {
-  "name": "ZZIS-APP",
+  "name": "zz-react-app",
   "version": "1.0.0",
-  "description": "ZZIS_APP",
+  "description": "zz-react-app",
   "directories": {
     "doc": "docs",
     "test": "tests"

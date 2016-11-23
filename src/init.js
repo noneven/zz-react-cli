@@ -19,7 +19,7 @@ function init(commanders) {
     process.exit(1);
   }
 
-  console.log(`Creating a new zzis app in ${dest}.`);
+  console.log(`Creating a new zrc app in ${dest}.`);
   console.log();
 
   vfs.src(['./**', '!node_modules/**/*'], {cwd: cwd, cwdbase: true, dot: true})

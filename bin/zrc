@@ -26,8 +26,8 @@ if (!commander.args[0]) {
   }else if(commander.args[0] == 'new'||commander.args[0] == 'n'){
     dest = join(process.cwd(), commander.args[1]);
     if (existsSync(dest)) {
-        console.error(error('Existing directory here, please run new command for an empty folder!'));
-        process.exit(1);
+      console.error(error('Existing directory here, please run new command for an empty folder!'));
+      process.exit(1);
     }
     mkdirpSync(dest);
     process.chdir(dest);

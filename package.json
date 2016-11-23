@@ -1,16 +1,19 @@
 {
-  "name": "zzis",
+  "name": "zrc",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "bin": {
-    "zzis": "./bin/zzis"
+    "zrc": "./bin/zrc"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "zzis"
+    "zrc",
+    "react",
+    "zz-react-cli",
+    "create-react-app"
   ],
   "dependencies": {
     "chalk": "^1.1.3",
