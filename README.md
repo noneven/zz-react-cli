@@ -1,4 +1,4 @@
-# zzis
+# zz-react-cli(zrc)
 zz react-project-cli
 
 * sprite自动化生成和编译成less/css...
