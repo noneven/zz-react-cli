@@ -1,6 +1,6 @@
 {
   "name": "zz-react-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "zz react-project-cli",
   "main": "src/init",
   "preferGlobal": "true",
