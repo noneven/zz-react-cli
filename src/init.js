@@ -1,67 +1,67 @@
-var join = require('path').join;
-var basename = require('path').basename;
-var vfs = require('vinyl-fs');
-var renameSync = require('fs').renameSync;
-var through = require('through2');
-var emptyDir = require('empty-dir').sync;
-var info = require('./log').info;
-var error = require('./log').error;
-var success = require('./log').success;
+let join = require('path').join
+let basename = require('path').basename
+let vfs = require('vinyl-fs')
+let through = require('through2')
+let emptyDir = require('empty-dir').sync
+let info = require('./log').info
+let error = require('./log').error
+let success = require('./log').success
 
 function init(commanders) {
-  var install = commanders.install;
-  const cwd = join(__dirname, '../template');
-  const dest = process.cwd();
-  const projectName = basename(dest);
+  let install = commanders.install
+  let cwd = join(__dirname, '../template')
+  let dest = process.cwd()
+  let projectName = basename(dest)
 
   if (!emptyDir(dest)) {
-    error('Existing files here, please run init command in an empty folder!');
-    process.exit(1);
+    error('Existing files here, please run init command in an empty folder!')
+    process.exit(1)
   }
 
-  console.log(`Creating a new zrc app in ${dest}.`);
-  console.log();
+  console.log(`Creating a new zrc app in ${dest}.`)
+  console.log()
 
   vfs.src(['./**', '!node_modules/**/*'], {cwd: cwd, cwdbase: true, dot: true})
     .pipe(template(dest, cwd))
     .pipe(vfs.dest(dest))
     .on('end', function() {
       if (install) {
-        info('run', 'npm install');
-        require('./install')(printSuccess);
+        info('run', 'npm install')
+        require('./install')(printSuccess)
       } else {
-        printSuccess();
+        printSuccess()
       }
     })
-    .resume();
+    .resume()
 
   function printSuccess() {
     success(`
-    Success! Created ${projectName} at ${dest}.
+      Success! Created ${projectName} at ${dest}.
 
-    Inside that directory, you can run several commands:
-      * npm start: Starts the development server.
-      * npm run build: Bundles the app into dist for production.
-      * npm test: Run test.
+      Inside that directory, you can run several commands:
+        * npm start: Starts the development server.
+        * npm run qa: Run test.
+        * npm run ftp: ftp to the test server.
+        * npm run build: Bundles the app into dist for production.
 
-    We suggest that you begin by typing:
-      cd ${dest}
-      npm start
+      We suggest that you begin by typing:
+        cd ${dest}
+        npm start
 
-    Happy hacking!`);
+      Happy coding!`)
   }
 }
 
 function template(dest, cwd) {
   return through.obj(function (file, enc, cb) {
     if (!file.stat.isFile()) {
-      return cb();
+      return cb()
     }
 
-    info('create', file.path.replace(cwd + '/', ''));
-    this.push(file);
-    cb();
-  });
+    info('create', file.path.replace(cwd + '/', ''))
+    this.push(file)
+    cb()
+  })
 }
 
-module.exports = init;
+module.exports = init

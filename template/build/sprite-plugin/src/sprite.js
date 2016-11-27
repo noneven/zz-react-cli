@@ -62,20 +62,20 @@ createProto.createSpriteImage = function(files){
 
         var imagemin = require('imagemin');
         // var imageminWebp = require('imagemin-webp');
-        var imageminGifsicle = require('imagemin-gifsicle');
-        var imageminMozjpeg = require('imagemin-mozjpeg');
-        var imageminOptipng = require('imagemin-optipng');
-        var imageminSvgo = require('imagemin-svgo');
-        var imageminPngquant = require('imagemin-pngquant');
+        // var imageminGifsicle = require('imagemin-gifsicle');
+        // var imageminMozjpeg = require('imagemin-mozjpeg');
+        // var imageminOptipng = require('imagemin-optipng');
+        // var imageminSvgo = require('imagemin-svgo');
+        // var imageminPngquant = require('imagemin-pngquant');
         imagemin([self.tSpriteFile], path.join(self.tSpriteFile,"../"), {
             use: [
-                imageminGifsicle({
-                    interlaced: false
-                }),
-                imageminMozjpeg(),
-                imageminSvgo(),
-                imageminPngquant(),
-                imageminOptipng(),
+                // imageminGifsicle({
+                //     interlaced: false
+                // }),
+                // imageminMozjpeg(),
+                // imageminSvgo(),
+                // imageminPngquant(),
+                // imageminOptipng(),
                 // imageminWebp({quality: 100})
             ]
         }).then(function() {

@@ -1,48 +1,46 @@
 #!/usr/bin/env node
 
-const chalk = require('chalk');
-const commander = require('commander');
-const spawn = require('win-spawn');
-const join = require('path').join;
-const mkdirpSync = require('fs-extra').mkdirpSync;
-const existsSync = require('fs').existsSync;
-const error = chalk.red;
+let commander = require('commander')
+let join = require('path').join
+let mkdirpSync = require('fs-extra').mkdirpSync
+let existsSync = require('fs').existsSync
+let chalk = require('chalk')
 
 commander
   .version(require('../package').version, '-v, --version')
-  .usage('<command> [options]')
+  .usage('[options] xxname')
   .on('--help', printHelp)
-
-  .usage('[options] appName')
-  .option('--no-install', 'Disable npm install after files created')
-  .parse(process.argv);
+  .option('-s, --install', 'Enable npm install after files created')
+  .parse(process.argv)
 
 if (!commander.args[0]) {
-  commander.help();
+  commander.help()
 } else {
-  let dest;
-  if(commander.args[0] == 'init'||commander.args[0] == 'i'){
-    dest = process.cwd();
-  }else if(commander.args[0] == 'new'||commander.args[0] == 'n'){
-    dest = join(process.cwd(), commander.args[1]);
+  let dest
+  let command = commander.args[0]
+  if(command == 'init'||command == 'i'){
+    dest = process.cwd()
+  }else if(command == 'new'||command == 'n'){
+    dest = join(process.cwd(), commander.args[1])
     if (existsSync(dest)) {
-      console.error(error('Existing directory here, please run new command for an empty folder!'));
-      process.exit(1);
+      console.error(chalk.red('Existing directory here, please run new command for an empty folder!'))
+      process.exit(1)
     }
-    mkdirpSync(dest);
-    process.chdir(dest);
-    require('../index')(commander);
-  }else if (commander.args[0] == 'create'||commander.args[0] == 'c') {
-    console.log('waiting')
+  }else if (command == 'create'||command == 'c') {
+    console.log('waiting...')
   }
+
+  mkdirpSync(dest)
+  process.chdir(dest)
+  require('../src/init')(commander)
 }
 
 function printHelp() {
-  console.log('  Commands:');
-  console.log();
-  console.log('    init           Create a new react application in the current folder (short-cut alias: "i")');
-  console.log('    new            Create a new application (short-cut alias: "n")');
-  console.log('    create         Create a new component (short-cut alias: "c")');
-  console.log();
+  console.log('  Commands:')
+  console.log()
+  console.log('    i, init        Init a new react application in the current folder')
+  console.log('    n, new         Create a new application')
+  console.log('    c, create      Create a new component')
+  console.log()
   console.log('  All commands can be run with -h (or --help) for more information.')
 }
