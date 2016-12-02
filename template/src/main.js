@@ -1,16 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, hashHistory } from 'react-router';
-
+let requireAuth = function(nextState, replace){
+  alert('需要登录');
+  replace('/login');
+};
 import './main.less';
 const rootRoute = {
   path: '/',
   component: require('./components/Home/Home').default,
   childRoutes: [{
-    path: 'grades',
+    path: 'login',
     getComponent(nextState, cb) {
       require.ensure([], (require) => {
-        cb(null, require('./components/Grades/Grades').default)
+        cb(null, require('./components/Login/Login').default)
       })
     }
   },{
