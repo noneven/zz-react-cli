@@ -10,7 +10,7 @@
     "lint": "eslint src",
     "test": "make test",
     "start": "npm run dev",
-    "pre": "sprite build -c ./.spriterc; node build/border1px.flow",
+    "pre": "sprite build -c ./.spriterc",
     "predev": "npm run pre",
     "dev": "cross-env NODE_ENV=development node build/webpack.dev.js",
     "qa": "rm -r -f dist; npm run build",

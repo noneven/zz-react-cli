@@ -93,10 +93,10 @@ var config = {
         )
       }
     }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'manifest',
-    //   chunks: ['vendor'],
-    // })
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor'],
+    })
   ]
 };
 
@@ -200,21 +200,22 @@ config.plugins.push(function() {
     compilation.plugin('html-webpack-plugin-after-emit', function(file, callback) {
       var manifest = '';
       var flexable = ';(function(){var d=document,f=d.documentElement,b=d.querySelector(\'meta[name="viewport"]\'),c;function e(){var g=f.getBoundingClientRect().width;f.style.fontSize=(g/320*16)+"px"}function a(){var g=1;b=d.createElement("meta");b.setAttribute("name","viewport");b.setAttribute("content","initial-scale="+g+", maximum-scale="+g+", minimum-scale="+g+", user-scalable=no");f.firstElementChild.appendChild(b)}a();e();window.addEventListener("resize",function(){clearTimeout(c);c=setTimeout(e,100)},false);window.addEventListener("pageshow",function(g){if(g.persisted){clearTimeout(c);c=setTimeout(e,100)}},false)})();';
-
+      var hairline = ';(function(){if(window.devicePixelRatio&&devicePixelRatio>=2){var a=document.createElement("div");a.style.border=".5px solid transparent";document.body.appendChild(a);if(a.offsetHeight==1){document.querySelector("html").classList.add("hairlines")}document.body.removeChild(a)}})();';
       Object.keys(compilation.assets).forEach(function(filename) {
         if (/\/?manifest.[^\/]*js$/.test(filename)) {
           manifest = compilation.assets[filename].source();
         }
       });
 
-      manifest ='<script>' +flexable+manifest+ '<\/script>'
-      if (manifest) {
-        var htmlSource = file.html.source();
-        htmlSource = htmlSource.replace(/(<\/head>)/, manifest + '$1');
-        file.html.source = function() {
-          return htmlSource;
-        };
-      }
+      var FM ='<script>' +flexable+manifest+ '<\/script>';
+      var HL ='<script>' +hairline+ '<\/script>';
+
+      var htmlSource = file.html.source();
+      htmlSource = htmlSource.replace(/(<\/head>)/, FM + '$1');
+      htmlSource = htmlSource.replace(/(<body>)/, '$1' + HL);
+      file.html.source = function() {
+        return htmlSource;
+      };
 
       callback(null, file);
     });
