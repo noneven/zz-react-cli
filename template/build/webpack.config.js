@@ -93,10 +93,10 @@ var config = {
         )
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['vendor'],
-    })
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'manifest',
+    //   chunks: ['vendor'],
+    // })
   ]
 };
 
@@ -193,19 +193,22 @@ config.plugins.push(
   })
 );
 
-// 内嵌 manifest 到 html 页面 px=>rem支持
+// px=>rem 1px
 config.plugins.push(function() {
   this.plugin('compilation', function(compilation) {
 
     compilation.plugin('html-webpack-plugin-after-emit', function(file, callback) {
       var manifest = '';
-      var flexable = ';(function(){var d=document,f=d.documentElement,b=d.querySelector(\'meta[name="viewport"]\'),c;function e(){var g=f.getBoundingClientRect().width;f.style.fontSize=(g/320*16)+"px"}function a(){var g=1;b=d.createElement("meta");b.setAttribute("name","viewport");b.setAttribute("content","initial-scale="+g+", maximum-scale="+g+", minimum-scale="+g+", user-scalable=no");f.firstElementChild.appendChild(b)}a();e();window.addEventListener("resize",function(){clearTimeout(c);c=setTimeout(e,100)},false);window.addEventListener("pageshow",function(g){if(g.persisted){clearTimeout(c);c=setTimeout(e,100)}},false)})();';
-      var hairline = ';(function(){if(window.devicePixelRatio&&devicePixelRatio>=2){var a=document.createElement("div");a.style.border=".5px solid transparent";document.body.appendChild(a);if(a.offsetHeight==1){document.querySelector("html").classList.add("hairlines")}document.body.removeChild(a)}})();';
-      Object.keys(compilation.assets).forEach(function(filename) {
-        if (/\/?manifest.[^\/]*js$/.test(filename)) {
-          manifest = compilation.assets[filename].source();
-        }
-      });
+      var flexable = ';(function(){var d=document,f=d.documentElement,b=d.querySelector(\'meta[name="viewport"]\'),c;function e(){var g=f.getBoundingClientRect().width;f.style.maxWidth="640px";f.style.margin="auto";f.style.fontSize=(g/320*16)+"px"}function a(){var g=1;b=d.createElement("meta");b.setAttribute("name","viewport");b.setAttribute("content","initial-scale="+g+", maximum-scale="+g+", minimum-scale="+g+", user-scalable=no");f.firstElementChild.appendChild(b)}a();e();window.addEventListener("resize",function(){clearTimeout(c);c=setTimeout(e,100)},false);window.addEventListener("pageshow",function(g){if(g.persisted){clearTimeout(c);c=setTimeout(e,100)}},false)})();';
+      var hairline = ';(function(){if(window.devicePixelRatio&&devicePixelRatio>=2){var a=document.createElement("div");a.style.border=".5px solid transparent";document.body.appendChild(a);if(a.offsetHeight==1){var b=document.querySelector("html");if(devicePixelRatio==2){b.classList.add("dpr2")}else{if(devicePixelRatio==3){b.classList.add("dpr3")}}}document.body.removeChild(a)}})();';
+      
+      // manifest in HTML
+
+      // Object.keys(compilation.assets).forEach(function(filename) {
+      //   if (/\/?manifest.[^\/]*js$/.test(filename)) {
+      //     manifest = compilation.assets[filename].source();
+      //   }
+      // });
 
       var FM ='<script>' +flexable+manifest+ '<\/script>';
       var HL ='<script>' +hairline+ '<\/script>';
