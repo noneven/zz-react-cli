@@ -4,18 +4,13 @@ var config = require('./webpack.config');
 
 var args = process.argv;
 var watch = args.indexOf('--watch') > -1;
-var online = args.indexOf('--deploy=online') > -1;
 
 // 测试环境静态资源 domain
 var testPublicPath = '/';
 // 生产环境静态资源 domain
 var onlinePublicPath = 'http://m/zhuanzhuan.58.com/Mzhuanzhuan/ZZMuying';
 
-if (online) {
-  config.output.publicPath = onlinePublicPath;
-} else {
-  config.output.publicPath = testPublicPath;
-}
+config.output.publicPath = onlinePublicPath;
 
 var compiler = webpack(config);
 

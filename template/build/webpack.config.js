@@ -60,7 +60,7 @@ alias = Object.assign(alias, {
 var config = {
   context: SRC_PATH,
   entry: {
-    app: ['babel-polyfill', SRC_PATH + '/index.js']
+    app: ['babel-polyfill', SRC_PATH + '/main.js']
   },
   output: {
     path: DIST_PATH,
@@ -95,7 +95,7 @@ var config = {
     }),
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'manifest',
-    //   chunks: ['vendor']
+    //   chunks: ['vendor'],
     // })
   ]
 };
@@ -177,7 +177,7 @@ config.plugins.push(
   new HtmlwebpackPlugin({
     filename: 'index.html',
     chunks: ['app', 'vendor'],
-    template: SRC_PATH + '/index.html',
+    template: ROOT_PATH + '/index.html',
     minify: __DEV__ ? false : {
       removeComments: true,
       collapseWhitespace: true,

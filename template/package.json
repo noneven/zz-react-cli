@@ -10,14 +10,14 @@
     "lint": "eslint src",
     "test": "make test",
     "start": "npm run dev",
-    "pre": "node build/sprite-plugin; node build/border1px.flow",
+    "pre": "sprite build -c ./.spriterc; node build/border1px.flow",
     "predev": "npm run pre",
     "dev": "cross-env NODE_ENV=development node build/webpack.dev.js",
     "qa": "rm -r -f dist; npm run build",
     "postqa": "npm run ftp",
     "ftp": "node build/ftp",
     "prebuild": "npm run pre",
-    "build": "cross-env NODE_ENV=production node build/webpack.release.js"
+    "build": "rm -f -r dist; cross-env NODE_ENV=production node build/webpack.release.js; rm -f ./dist/static/js/manifest.*.js"
   },
   "keywords": [
     "webpack",
@@ -62,7 +62,9 @@
     "mustache": "^2.3.0",
     "spritesmith": "^3.1.0",
     "spritesheet-templates": "^10.1.4",
-    "map-stream": "0.0.6"
+    "left-pad": "^1.1.3",
+    "map-stream": "0.0.6",
+    "sprite-cli": "^0.1.0"
   },
   "dependencies": {
     "react": "^15.2.1",

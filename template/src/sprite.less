@@ -1,0 +1,145 @@
+@px: 320/750/16*1rem;@percent: 100/750*1%;
+@icon-add1: -431px, 0px, 375px, 280px;
+@icon-add2: -375px, -472px, 375px, 140px;
+@icon-add3: 0px, -472px, 375px, 140px;
+@icon-address: -786px, -312px, 18px, 22px;
+@icon-auth: -668px, -280px, 30px, 30px;
+@icon-cate: 0px, -312px, 460px, 160px;
+@icon-comment: -762px, -335px, 23px, 22px;
+@icon-first: 0px, -612px, 151px, 146px;
+@icon-friend: -551px, -280px, 87px, 31px;
+@icon-like: -754px, -280px, 25px, 23px;
+@icon-liked: -779px, -280px, 25px, 23px;
+@icon-post_btn: -151px, -612px, 142px, 142px;
+@icon-second: -611px, -312px, 151px, 146px;
+@icon-star: -638px, -280px, 30px, 30px;
+@icon-third: -460px, -312px, 151px, 146px;
+@icon-tips_bear: 0px, 0px, 431px, 312px;
+@icon-v_ico: -698px, -280px, 28px, 28px;
+@icon-want: -762px, -312px, 24px, 23px;
+@icon-wanted: -726px, -280px, 28px, 27px;
+@icon-zz_auth: -431px, -280px, 120px, 31px;
+
+.sprite-width(@sprite) {
+  width: extract(@sprite, 3);
+}
+
+.sprite-height(@sprite) {
+  height: extract(@sprite, 4);
+}
+
+.sprite-position(@sprite) {
+  @sprite-offset-x: extract(@sprite, 1);
+  @sprite-offset-y: extract(@sprite, 2);
+  background-position: @sprite-offset-x  @sprite-offset-y;
+}
+
+.sprite(@sprite) {
+  .sprite-position(@sprite);
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: block;
+  .sprite-width(@sprite);
+  .sprite-height(@sprite);
+}
+
+.icon-add1 {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-add1);
+}
+
+.icon-add2 {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-add2);
+}
+
+.icon-add3 {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-add3);
+}
+
+.icon-address {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-address);
+}
+
+.icon-auth {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-auth);
+}
+
+.icon-cate {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-cate);
+}
+
+.icon-comment {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-comment);
+}
+
+.icon-first {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-first);
+}
+
+.icon-friend {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-friend);
+}
+
+.icon-like {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-like);
+}
+
+.icon-liked {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-liked);
+}
+
+.icon-post_btn {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-post_btn);
+}
+
+.icon-second {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-second);
+}
+
+.icon-star {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-star);
+}
+
+.icon-third {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-third);
+}
+
+.icon-tips_bear {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-tips_bear);
+}
+
+.icon-v_ico {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-v_ico);
+}
+
+.icon-want {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-want);
+}
+
+.icon-wanted {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-wanted);
+}
+
+.icon-zz_auth {
+  background-image: url('assets/sprite.png');
+  .sprite(@icon-zz_auth);
+}
+

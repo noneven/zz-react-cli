@@ -16,7 +16,8 @@ Border1pxFlowProto.run = function(){
 Border1pxFlowProto.handler = function(file, callback){
   var extname  = path.extname(file.path);
   var handleFiles = ['.js', '.css', '.less', '.html', '.vue'];
-  var borderRegExp = /border:\s*1px (solid|dashed) \S+;/g;
+  // var borderRegExp = /border:\s*1px (solid|dashed) \S+;/g;
+  var borderRegExp = /border\S{0,7}\s*:\s*1px \s*(solid|dashed)\s* \S+;/g;
 
   if(handleFiles.indexOf(extname)>-1){
     var contents = file.contents.toString();

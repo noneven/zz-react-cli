@@ -4,7 +4,7 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
 var utils = require('./utils');
 
-var PORT = 8080;
+var PORT = 8099;
 var HOST = utils.getIP();
 
 var args = process.argv;
