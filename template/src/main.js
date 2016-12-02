@@ -14,7 +14,7 @@ const rootRoute = {
     getComponent(nextState, cb) {
       require.ensure([], (require) => {
         cb(null, require('./components/Login/Login').default)
-      })
+      }, "login")
     }
   },{
     path: 'messages',
@@ -22,7 +22,7 @@ const rootRoute = {
     getComponent(nextState, cb) {
       require.ensure([], (require) => {
         cb(null, require('./components/Messages/Messages').default)
-      })
+      }, 'messages')
     },
     onEnter(nextState, replace) {
       requireAuth(nextState, replace)
@@ -32,21 +32,21 @@ const rootRoute = {
     getComponent(nextState, cb) {
       require.ensure([], (require) => {
         cb(null, require('./components/Profile/Profile').default)
-      })
+      }, 'profile')
     },
     childRoutes: [{
       path: 'a',
       getComponent(nextState, cb) {
         require.ensure([], (require) => {
           cb(null, require('./components/Profile/A/A').default)
-        })
+        }, 'profileA')
       }
     },{
       path: 'b',
       getComponent(nextState, cb) {
         require.ensure([], (require) => {
           cb(null, require('./components/Profile/B/B').default)
-        })
+        }, 'profileB')
       }
     }]
   }]
