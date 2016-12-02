@@ -8,7 +8,7 @@ export default class App extends Component {
     }
     return (
       <div>
-        我是HOME页
+        <header>我是HOME页</header>
         <div>
           <div><Link to="/login">Login</Link></div>
           <div><Link to="/messages">messages</Link></div>

@@ -1,13 +1,23 @@
+@import "./sprite.less";
+@import "./components/common.less";
+
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  border-top: 1px solid #000;
+  	margin: 0;
+  	padding: 0;
+  	font-family: sans-serif;
+  	border-top: 1px solid #000;
+  	border-bottom: 1px solid #000;
 }
+
+header{
+	// REM + LESS
+	font-size: 60*@px;
+}
+
+// border 1px flow
 .dpr2 body{
   border-bottom: .5px solid #000;
 }
 .dpr3 body{
   border-bottom: .3333px solid #000;
 }
-@import "./sprite.less";
