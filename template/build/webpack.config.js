@@ -76,7 +76,7 @@ var config = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || 'development')
     }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
+    // new webpack.optimize.OccurrenceOrderPlugin(),
     new AssetsWebpackPlugin({
       filename: 'asset-manifest.json',
       path: DIST_PATH
@@ -176,7 +176,7 @@ var HtmlwebpackPlugin = require('html-webpack-plugin');
 config.plugins.push(
   new HtmlwebpackPlugin({
     filename: 'index.html',
-    chunks: ['app', 'vendor'],
+    chunks: ['app','vendor'],
     template: ROOT_PATH + '/index.html',
     minify: __DEV__ ? false : {
       removeComments: true,
@@ -193,7 +193,6 @@ config.plugins.push(
   })
 );
 
-// px=>rem 1px
 config.plugins.push(function() {
   this.plugin('compilation', function(compilation) {
 
@@ -204,11 +203,11 @@ config.plugins.push(function() {
       
       // manifest in HTML
 
-      // Object.keys(compilation.assets).forEach(function(filename) {
-      //   if (/\/?manifest.[^\/]*js$/.test(filename)) {
-      //     manifest = compilation.assets[filename].source();
-      //   }
-      // });
+      Object.keys(compilation.assets).forEach(function(filename) {
+        if (/\/?manifest.[^\/]*js$/.test(filename)) {
+          manifest = compilation.assets[filename].source();
+        }
+      });
 
       var FM ='<script>' +flexable+manifest+ '<\/script>';
       // var HL ='<script>' +hairline+ '<\/script>';
