@@ -200,7 +200,7 @@ config.plugins.push(function() {
     compilation.plugin('html-webpack-plugin-after-emit', function(file, callback) {
       var manifest = '';
       var flexable = ';(function(){var d=document,f=d.documentElement,b=d.querySelector(\'meta[name="viewport"]\'),c;function e(){var g=f.getBoundingClientRect().width;f.style.maxWidth="640px";f.style.margin="auto";f.style.fontSize=(g/320*16)+"px"}function a(){var g=1;b=d.createElement("meta");b.setAttribute("name","viewport");b.setAttribute("content","initial-scale="+g+", maximum-scale="+g+", minimum-scale="+g+", user-scalable=no");f.firstElementChild.appendChild(b)}a();e();window.addEventListener("resize",function(){clearTimeout(c);c=setTimeout(e,100)},false);window.addEventListener("pageshow",function(g){if(g.persisted){clearTimeout(c);c=setTimeout(e,100)}},false)})();';
-      var hairline = ';(function(){if(window.devicePixelRatio&&devicePixelRatio>=2){var a=document.createElement("div");a.style.border=".5px solid transparent";document.body.appendChild(a);if(a.offsetHeight==1){var b=document.querySelector("html");if(devicePixelRatio==2){b.classList.add("dpr2")}else{if(devicePixelRatio==3){b.classList.add("dpr3")}}}document.body.removeChild(a)}})();';
+      // var hairline = ';(function(){if(window.devicePixelRatio&&devicePixelRatio>=2){var a=document.createElement("div");a.style.border=".5px solid transparent";document.body.appendChild(a);if(a.offsetHeight==1){var b=document.querySelector("html");if(devicePixelRatio==2){b.classList.add("dpr2")}else{if(devicePixelRatio==3){b.classList.add("dpr3")}}}document.body.removeChild(a)}})();';
       
       // manifest in HTML
 
@@ -211,11 +211,11 @@ config.plugins.push(function() {
       // });
 
       var FM ='<script>' +flexable+manifest+ '<\/script>';
-      var HL ='<script>' +hairline+ '<\/script>';
+      // var HL ='<script>' +hairline+ '<\/script>';
 
       var htmlSource = file.html.source();
       htmlSource = htmlSource.replace(/(<\/head>)/, FM + '$1');
-      htmlSource = htmlSource.replace(/(<body>)/, '$1' + HL);
+      // htmlSource = htmlSource.replace(/(<body>)/, '$1' + HL);
       file.html.source = function() {
         return htmlSource;
       };

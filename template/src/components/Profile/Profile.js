@@ -18,7 +18,6 @@ export default withRouter(class Profile extends Component {
   	this.props.router.push('/');  	
   }
   componentDidMount() {
-  	console.log(this.props.router)
     this.props.router.setRouteLeaveHook(
       this.props.route, 
       this.routerWillLeave
