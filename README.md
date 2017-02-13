@@ -1,4 +1,12 @@
 # zz-react-cli(zrc)
+
+```
+npm install zz-react-cli -g
+zrc new yourProjrct --install
+//mkdir yourProjrct&zrc init
+npm run dev
+```
+
 zz react-project-cli
 
 * 集成sprite自动生成和编译成样式
